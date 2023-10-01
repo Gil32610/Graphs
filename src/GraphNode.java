@@ -8,5 +8,11 @@ public class GraphNode {
         this.index = index;
     }
 
+    public Character getName() {
+        return name;
+    }
 
+    public int getIndex() {
+        return index;
+    }
 }
