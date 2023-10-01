@@ -11,6 +11,13 @@ private ArrayList<GraphNodeNeighbourList> adjacencyList;
         return adjacencyList;
     }
 
+    public void addUndirectedEdge(int i, int j){
+       GraphNodeNeighbourList start = adjacencyList.get(i);
+       GraphNodeNeighbourList pivot = adjacencyList.get(j);
+       adjacencyList.get(i).getNeighbours().add(pivot);
+       adjacencyList.get(j).getNeighbours().add(start);
+    }
+
     @Override
     public String toString(){
         StringBuilder s = new StringBuilder();
