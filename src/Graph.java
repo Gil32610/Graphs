@@ -18,7 +18,7 @@ private int[][] adjacencyMatrix;
     public String toString(){
         StringBuilder s= new StringBuilder();
 
-        s.append("  ");
+        s.append("   ");
 
         for (int i = 0; i < nodeList.size(); i++) {
             s.append(nodeList.get(i).getName() + " ");
