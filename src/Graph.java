@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Graph {
 private ArrayList<GraphNode> nodeList;
-private int[] [] adjacencyMatrix;
+private int[][] adjacencyMatrix;
 
     public Graph(ArrayList<GraphNode> nodeList) {
         this.nodeList = nodeList;
