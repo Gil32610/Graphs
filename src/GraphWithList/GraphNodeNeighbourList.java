@@ -1,3 +1,5 @@
+package GraphWithList;
+
 import java.util.ArrayList;
 
 public class GraphNodeNeighbourList {
@@ -22,5 +24,13 @@ public class GraphNodeNeighbourList {
 
     public ArrayList<GraphNodeNeighbourList> getNeighbours() {
         return neighbours;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "{name=" + name +
+                ", index=" + index +
+                '}';
     }
 }

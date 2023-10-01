@@ -1,3 +1,5 @@
+package GraphWithMatrix;
+
 public class GraphNode {
 
     private Character name;
