@@ -84,4 +84,16 @@ private ArrayList<GraphNodeNeighbourList> adjacencyList;
             cor[currentPos] = GraphNodeNeighbourList.PRETO;
         }
     }
+
+    public int[] getAnte() {
+        return ante;
+    }
+
+    public int[] getD() {
+        return d;
+    }
+
+    public int[] getCor() {
+        return cor;
+    }
 }
