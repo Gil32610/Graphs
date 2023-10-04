@@ -1,6 +1,7 @@
 package GraphWithMatrix;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,5 +19,9 @@ public class Main {
         g.addUndirectedEdge(1,4);
         g.addUndirectedEdge(3,2);
         System.out.println(g);
+        g.BFS(0);
+        System.out.println(Arrays.deepToString(g.getPrevious()));
+        System.out.println(Arrays.deepToString(g.getDistance()));
+        System.out.println(Arrays.deepToString(g.getCor()));
     }
 }

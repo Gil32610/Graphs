@@ -1,19 +1,32 @@
 package GraphWithMatrix;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Graph {
 private ArrayList<GraphNode> nodeList;
-private int[][] adjacencyMatrix;
+private boolean[][] adjacencyMatrix;
+
+private Integer[]cor;
+
+private Integer[]previous;
+private Integer[] distance;
+
+private Queue<Integer> fila;
 
     public Graph(ArrayList<GraphNode> nodeList) {
         this.nodeList = nodeList;
-        this.adjacencyMatrix = new int[nodeList.size()][nodeList.size()];
+        this.adjacencyMatrix = new boolean[nodeList.size()][nodeList.size()];
+        fila = new LinkedList<>();
+        cor = new Integer[nodeList.size()];
+        previous = new Integer[nodeList.size()];
+        distance = new Integer[nodeList.size()];
     }
 
     public void addUndirectedEdge(int i, int j){
-        adjacencyMatrix[i][j] = 1;
-        adjacencyMatrix[j][i] = 1;
+        adjacencyMatrix[i][j] = true;
+        adjacencyMatrix[j][i] = true;
     }
 
     @Override
@@ -29,7 +42,7 @@ private int[][] adjacencyMatrix;
         for (int i = 0; i < nodeList.size() ; i++) {
             s.append(nodeList.get(i).getName()+": ");
             for (int j = 0; j <adjacencyMatrix[i].length ; j++) {
-                s.append(adjacencyMatrix[i][j]+ " ");
+                s.append(flag(adjacencyMatrix[i][j])+ " ");
 
             }
             s.append("\n");
@@ -38,5 +51,44 @@ private int[][] adjacencyMatrix;
 
     }
 
+    public int flag(boolean status){
+        return status?1:0;
+    }
 
+    public void BFS(int s){
+        for (int j = 0; j < nodeList.size(); j++) {
+            cor[j] = GraphNode.BRANCO;
+            distance[j] = -1;
+            previous[j] = null;
+        }
+        cor[s] = GraphNode.CINZA;
+        distance[s] = 0;
+        fila.offer(s);
+        while(!fila.isEmpty()){
+            int u = fila.poll();
+            for (int i = 0; i < nodeList.size(); i++) {
+
+                if(adjacencyMatrix[u][i] && cor[i]==GraphNode.BRANCO){
+                    cor[i] = GraphNode.CINZA;
+                    distance[i]= distance[u]+1;
+                    previous[i] = u;
+                    fila.offer(i);
+                }
+            }
+            cor[u] = GraphNode.PRETO;
+        }
+
+    }
+
+    public Integer[] getCor() {
+        return cor;
+    }
+
+    public Integer[] getPrevious() {
+        return previous;
+    }
+
+    public Integer[] getDistance() {
+        return distance;
+    }
 }
