@@ -97,26 +97,24 @@ private int end[];
         return dfsVisit(0,nodeList.get(0).getValue(),targetSum);
     }
 
-    public boolean dfsVisit(int u, int sum, int targetSum){
-        if(!allVisited()){
-            if(sum == targetSum && neighboursCount(u)==1){
+    public boolean dfsVisit(int u, int sum, int targetSum) {
+        if (!allVisited()) {
+            if (sum == targetSum && neighboursCount(u) == 1) {
                 return true;
             }
             cor[u] = GraphNode.CINZA;
             start[u] = ++tempo;
-            for (int v = 0; v <adjacencyMatrix.length; v++) {
-                if(adjacencyMatrix[u][v]&&cor[v]==GraphNode.BRANCO){
+            for (int v = 0; v < adjacencyMatrix.length; v++) {
+                if (adjacencyMatrix[u][v] && cor[v] == GraphNode.BRANCO) {
                     previous[v] = u;
-                    sum+=nodeList.get(v).getValue();
-                    return dfsVisit(v,sum,targetSum);
+                    sum += nodeList.get(v).getValue();
+                    return dfsVisit(v, sum, targetSum);
                 }
             }
-            cor[u] = GraphNode.PRETO;
-            sum-=nodeList.get(u).getValue();
-        }
 
-        else {
-            return false;
+            cor[u] = GraphNode.PRETO;
+            sum -= nodeList.get(u).getValue();
+            return dfsVisit(previous[u],sum,targetSum);
         }
         return false;
     }
