@@ -12,8 +12,12 @@ private Integer[]cor;
 
 private Integer[]previous;
 private Integer[] distance;
-
+private int tempo;
 private Queue<Integer> fila;
+
+private int start[];
+private int end[];
+
 
     public Graph(ArrayList<GraphNode> nodeList) {
         this.nodeList = nodeList;
@@ -22,6 +26,8 @@ private Queue<Integer> fila;
         cor = new Integer[nodeList.size()];
         previous = new Integer[nodeList.size()];
         distance = new Integer[nodeList.size()];
+        start= new int[nodeList.size()];
+        end = new int[nodeList.size()];
     }
 
     public void addUndirectedEdge(int i, int j){
@@ -80,6 +86,41 @@ private Queue<Integer> fila;
 
     }
 
+    public boolean startDFS(int s,int targetSum){
+        for (int i = 0; i <nodeList.size() ; i++) {
+            cor[i] = GraphNode.BRANCO;
+            start[i]=-2;
+            end[i]=-2;
+            previous[i] = -2;
+        }
+        tempo= -1;
+        return dfsVisit(0,nodeList.get(0).getValue(),targetSum);
+    }
+
+    public boolean dfsVisit(int u, int sum, int targetSum){
+        if(!allVisited()){
+            if(sum == targetSum && neighboursCount(u)==1){
+                return true;
+            }
+            cor[u] = GraphNode.CINZA;
+            start[u] = ++tempo;
+            for (int v = 0; v <adjacencyMatrix.length; v++) {
+                if(adjacencyMatrix[u][v]&&cor[v]==GraphNode.BRANCO){
+                    previous[v] = u;
+                    sum+=nodeList.get(v).getValue();
+                    return dfsVisit(v,sum,targetSum);
+                }
+            }
+            cor[u] = GraphNode.PRETO;
+            sum-=nodeList.get(u).getValue();
+        }
+
+        else {
+            return false;
+        }
+        return false;
+    }
+
     public Integer[] getCor() {
         return cor;
     }
@@ -90,5 +131,23 @@ private Queue<Integer> fila;
 
     public Integer[] getDistance() {
         return distance;
+    }
+
+    public int neighboursCount(int u){
+        int count =0;
+        for (int i = 0; i < adjacencyMatrix.length; i++) {
+            count += adjacencyMatrix[u][i]?1:0;
+        }
+        return count;
+    }
+
+    public boolean allVisited(){
+        for (int i = 0; i < cor.length; i++) {
+            if(cor[i] != GraphNode.PRETO){
+                return false;
+            }
+
+        }
+        return true;
     }
 }
