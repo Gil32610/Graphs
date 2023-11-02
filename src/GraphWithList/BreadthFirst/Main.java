@@ -1,4 +1,7 @@
-package GraphWithList;
+package GraphWithList.BreadthFirst;
+
+import GraphWithList.GraphNodeNeighbourList;
+import GraphWithList.GraphWithAdjList;
 
 import java.util.ArrayList;
 
@@ -26,7 +29,7 @@ public class Main {
         printGraphTraversalInfo(g);
     }
 
-    public static void printArray(int[]array){
+    public static void printArray(Integer[]array){
         for (int i = 0; i <array.length ; i++) {
             System.out.printf("%s",i!=array.length-1?array[i]+ " ":array[i]+ "\n");
         }

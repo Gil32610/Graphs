@@ -3,19 +3,28 @@ package GraphWithList;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class GraphWithAdjList {
 
-    private int[] ante;
-    private int[] d;
-    private int[] cor;
+    private Integer[] ante;
+    private Integer[] d;
+    private Integer[] cor;
+
+    private Integer[] start;
+    private Integer[]end;
+    private int time;
     private ArrayList<GraphNodeNeighbourList> adjacencyList;
+
+
 
     public GraphWithAdjList(ArrayList<GraphNodeNeighbourList> adjacencyList) {
         this.adjacencyList = adjacencyList;
-        this.d = new int[adjacencyList.size()];
-        this.cor = new int[adjacencyList.size()];
-        this.ante = new int[adjacencyList.size()];
+        this.d = new Integer[adjacencyList.size()];
+        this.cor = new Integer[adjacencyList.size()];
+        this.ante = new Integer[adjacencyList.size()];
+        this.start = new Integer[adjacencyList.size()];
+        this.end = new Integer[adjacencyList.size()];
     }
 
     public ArrayList<GraphNodeNeighbourList> getAdjacencyList() {
@@ -84,15 +93,56 @@ public class GraphWithAdjList {
         }
     }
 
-    public int[] getAnte() {
+    public void addDirectedEdge(int i, int j){
+        GraphNodeNeighbourList first = adjacencyList.get(i);
+        GraphNodeNeighbourList second = adjacencyList.get(j);
+        first.getNeighbours().add(second);
+    }
+
+public Stack<GraphNodeNeighbourList> topologicalDfsStart(){
+        Stack<GraphNodeNeighbourList> stack = new Stack<>();
+    for (GraphNodeNeighbourList node:adjacencyList
+         ) {
+        cor[adjacencyList.indexOf(node)] = GraphNodeNeighbourList.BRANCO;
+        start[adjacencyList.indexOf(node)] = -2;
+        end[adjacencyList.indexOf(node)] = -2;
+    }
+    this.time =-1;
+    for (GraphNodeNeighbourList v:adjacencyList
+         ) {
+        if(v.getStatus() == GraphNodeNeighbourList.BRANCO){
+            topologicalDFS(v,stack);
+        }
+    }
+    return stack;
+}
+
+public void topologicalDFS (GraphNodeNeighbourList u, Stack<GraphNodeNeighbourList> stack){
+        start[adjacencyList.indexOf(u)] = ++time;
+        cor[adjacencyList.indexOf(u)] = GraphNodeNeighbourList.CINZA;
+    for (GraphNodeNeighbourList v:u.getNeighbours()
+         ) {
+        if(v.getStatus()==GraphNodeNeighbourList.BRANCO){
+            ante[adjacencyList.indexOf(v)] = adjacencyList.indexOf(u);
+            cor[adjacencyList.indexOf(v)] = GraphNodeNeighbourList.CINZA;
+            topologicalDFS(v,stack);
+        }
+    }
+    end[adjacencyList.indexOf(u)] = ++time;
+    cor[adjacencyList.indexOf(u)] = GraphNodeNeighbourList.PRETO;
+    stack.push(u);
+}
+
+
+    public Integer[] getAnte() {
         return ante;
     }
 
-    public int[] getD() {
+    public Integer[] getD() {
         return d;
     }
 
-    public int[] getCor() {
+    public Integer[] getCor() {
         return cor;
     }
 }
