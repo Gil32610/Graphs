@@ -30,10 +30,18 @@ public class Main {
 
         g.addUndirectedEdge(7,8);
         System.out.println(g);
-        System.out.println(g.startDFS(0,20));
+        int sumTarget = 20;
+        System.out.println("Sum Target: "+ sumTarget);
+        printListNodes(nodeList);
+        System.out.println("Output : " + g.startDFS(0,sumTarget));
+        System.out.println("Previous: "+ Arrays.deepToString(g.getPrevious()));
+        System.out.println("Distance: " + Arrays.deepToString(g.getDistance()));
+        System.out.println("Color: "+ Arrays.deepToString(g.getCor()));
+    }
 
-        System.out.println(Arrays.deepToString(g.getPrevious()));
-        System.out.println(Arrays.deepToString(g.getDistance()));
-        System.out.println(Arrays.deepToString(g.getCor()));
+    public static void printListNodes(ArrayList<GraphNode> nodeList){
+        for (int i = 0; i <nodeList.size() ; i++) {
+            System.out.println("Node: " + nodeList.get(i).getValue());
+        }
     }
 }
