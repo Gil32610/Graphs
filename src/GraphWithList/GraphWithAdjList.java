@@ -110,7 +110,7 @@ public Stack<GraphNodeNeighbourList> topologicalDfsStart(){
     this.time =-1;
     for (GraphNodeNeighbourList v:adjacencyList
          ) {
-        if(v.getStatus() == GraphNodeNeighbourList.BRANCO){
+        if(cor[adjacencyList.indexOf(v)] == GraphNodeNeighbourList.BRANCO){
             topologicalDFS(v,stack);
         }
     }
@@ -122,7 +122,7 @@ public void topologicalDFS (GraphNodeNeighbourList u, Stack<GraphNodeNeighbourLi
         cor[adjacencyList.indexOf(u)] = GraphNodeNeighbourList.CINZA;
     for (GraphNodeNeighbourList v:u.getNeighbours()
          ) {
-        if(v.getStatus()==GraphNodeNeighbourList.BRANCO){
+        if(cor[adjacencyList.indexOf(v)] == GraphNodeNeighbourList.BRANCO){
             ante[adjacencyList.indexOf(v)] = adjacencyList.indexOf(u);
             cor[adjacencyList.indexOf(v)] = GraphNodeNeighbourList.CINZA;
             topologicalDFS(v,stack);
