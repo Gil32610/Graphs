@@ -15,8 +15,8 @@ private Integer[] distance;
 private int tempo;
 private Queue<Integer> fila;
 
-private int start[];
-private int end[];
+private Integer start[];
+private Integer end[];
 
 
     public Graph(ArrayList<GraphNode> nodeList) {
@@ -26,8 +26,8 @@ private int end[];
         cor = new Integer[nodeList.size()];
         previous = new Integer[nodeList.size()];
         distance = new Integer[nodeList.size()];
-        start= new int[nodeList.size()];
-        end = new int[nodeList.size()];
+        start= new Integer[nodeList.size()];
+        end = new Integer[nodeList.size()];
     }
 
     public void addUndirectedEdge(int i, int j){
@@ -86,7 +86,7 @@ private int end[];
 
     }
 
-    public boolean startDFS(int s,int targetSum){
+    public boolean startSumTargetDFS(int s,int targetSum){
         for (int i = 0; i <nodeList.size() ; i++) {
             cor[i] = GraphNode.BRANCO;
             start[i]=-2;
@@ -94,10 +94,10 @@ private int end[];
             previous[i] = -2;
         }
         tempo= -1;
-        return dfsVisit(0,nodeList.get(0).getValue(),targetSum);
+        return dfsSumTargetVisit(0,nodeList.get(0).getValue(),targetSum);
     }
 
-    public boolean dfsVisit(int u, int sum, int targetSum) {
+    public boolean dfsSumTargetVisit(int u, int sum, int targetSum) {
         if (!allVisited()) {
             if (sum == targetSum && neighboursCount(u) == 1) {
                 return true;
@@ -108,15 +108,40 @@ private int end[];
                 if (adjacencyMatrix[u][v] && cor[v] == GraphNode.BRANCO) {
                     previous[v] = u;
                     sum += nodeList.get(v).getValue();
-                    return dfsVisit(v, sum, targetSum);
+                    return dfsSumTargetVisit(v, sum, targetSum);
                 }
             }
 
             cor[u] = GraphNode.PRETO;
             sum -= nodeList.get(u).getValue();
-            return dfsVisit(previous[u],sum,targetSum);
+            return dfsSumTargetVisit(previous[u],sum,targetSum);
         }
         return false;
+    }
+
+    public void dfsStart(int s){
+        for (int i = 0; i < adjacencyMatrix.length; i++) {
+            cor[i] = GraphNode.BRANCO;
+            start[i]=-2;
+            end[i]=-2;
+            previous[i] = -2;
+        }
+        tempo = -1;
+        dfsVisit(s);
+    }
+    
+    
+    public void dfsVisit(int u){
+        cor[u] = GraphNode.CINZA;
+        start[u]=++tempo;
+        for (int v = 0; v < adjacencyMatrix.length; v++) {
+            if(adjacencyMatrix[u][v]&& cor[v]==GraphNode.BRANCO){
+                previous[v] = u;
+                dfsVisit(v);
+            }
+        }
+        end[u]=++tempo;
+        cor[u] = GraphNode.PRETO;
     }
 
     public Integer[] getCor() {
@@ -148,4 +173,13 @@ private int end[];
         }
         return true;
     }
+
+    public Integer[] getStart() {
+        return start;
+    }
+
+    public Integer[] getEnd() {
+        return end;
+    }
 }
+

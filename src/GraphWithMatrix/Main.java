@@ -33,10 +33,17 @@ public class Main {
         int sumTarget = 20;
         System.out.println("Sum Target: "+ sumTarget);
         printListNodes(nodeList);
-        System.out.println("Output : " + g.startDFS(0,sumTarget));
+        System.out.println("Output : " + g.startSumTargetDFS(0,sumTarget));
         System.out.println("Previous: "+ Arrays.deepToString(g.getPrevious()));
         System.out.println("Distance: " + Arrays.deepToString(g.getDistance()));
         System.out.println("Color: "+ Arrays.deepToString(g.getCor()));
+
+        g.dfsStart(0);
+        System.out.println("\nThis is DFS previous nodes order:");
+        System.out.println(Arrays.deepToString(g.getPrevious()));
+        System.out.println("This is DFS time of start and time of end order:");
+        System.out.println(Arrays.deepToString(g.getStart()));
+        System.out.println(Arrays.deepToString(g.getEnd()));
     }
 
     public static void printListNodes(ArrayList<GraphNode> nodeList){
