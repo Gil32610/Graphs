@@ -145,4 +145,18 @@ public void topologicalDFS (GraphNodeNeighbourList u, Stack<GraphNodeNeighbourLi
     public Integer[] getCor() {
         return cor;
     }
+
+    public void printDirectedGraph(){
+        for (GraphNodeNeighbourList node:adjacencyList
+             ) {
+
+            for (GraphNodeNeighbourList nodeRelation:node.getNeighbours()
+                 ) {
+                if(node.getNeighbours().size()-1!= node.getNeighbours().indexOf(nodeRelation)){
+                    System.out.print(node.getName()+" -> " + nodeRelation.getName()+ " | ");
+                }
+                else System.out.println(node.getName()+" -> " + nodeRelation.getName());
+            }
+        }
+    }
 }

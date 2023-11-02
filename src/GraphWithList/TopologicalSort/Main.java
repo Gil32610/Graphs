@@ -39,6 +39,8 @@ public class Main {
         //F directed edge
         graph.addDirectedEdge(5,6);
 
+        graph.printDirectedGraph();
+
         Stack<GraphNodeNeighbourList> stack = graph.topologicalDfsStart();
 
         Character[] order = new Character[stack.size()];
