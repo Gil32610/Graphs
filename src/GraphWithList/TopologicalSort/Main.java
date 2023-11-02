@@ -4,6 +4,8 @@ import GraphWithList.GraphNodeNeighbourList;
 import GraphWithList.GraphWithAdjList;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) {
@@ -36,6 +38,16 @@ public class Main {
 
         //F directed edge
         graph.addDirectedEdge(5,6);
+
+        Stack<GraphNodeNeighbourList> stack = graph.topologicalDfsStart();
+
+        Character[] order = new Character[stack.size()];
+
+        for (int i = 0; i <order.length ; i++) {
+            order[i] = stack.pop().getName();
+        }
+        System.out.println("Order of topological sort on the graph model:");
+        System.out.println(Arrays.deepToString(order));
 
 
 
