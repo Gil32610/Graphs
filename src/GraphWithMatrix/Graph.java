@@ -3,6 +3,7 @@ package GraphWithMatrix;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class Graph {
 private ArrayList<GraphNode> nodeList;
@@ -94,7 +95,7 @@ private Integer end[];
             previous[i] = -2;
         }
         tempo= -1;
-        return dfsSumTargetVisit(0,nodeList.get(0).getValue(),targetSum);
+        return dfsSumTargetVisit(0,nodeList.get(0).getIndex(),targetSum);
     }
 
     public boolean dfsSumTargetVisit(int u, int sum, int targetSum) {
@@ -107,13 +108,13 @@ private Integer end[];
             for (int v = 0; v < adjacencyMatrix.length; v++) {
                 if (adjacencyMatrix[u][v] && cor[v] == GraphNode.BRANCO) {
                     previous[v] = u;
-                    sum += nodeList.get(v).getValue();
+                    sum += nodeList.get(v).getIndex();
                     return dfsSumTargetVisit(v, sum, targetSum);
                 }
             }
 
             cor[u] = GraphNode.PRETO;
-            sum -= nodeList.get(u).getValue();
+            sum -= nodeList.get(u).getIndex();
             return dfsSumTargetVisit(previous[u],sum,targetSum);
         }
         return false;
@@ -142,6 +143,70 @@ private Integer end[];
         }
         end[u]=++tempo;
         cor[u] = GraphNode.PRETO;
+    }
+
+    public void addDirectedEdge(int i,int j){
+        adjacencyMatrix[i][j] = true;
+    }
+
+    public Stack<Integer> topologicalDfsStart(){
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < adjacencyMatrix.length; i++) {
+            cor[i]= GraphNode.BRANCO;
+            start[i] = -2;
+            end[i] = -2;
+            previous[i] = -2;
+        }
+        tempo = -1;
+        for (int u = 0; u < adjacencyMatrix.length; u++) {
+            if(hasDependencies(u)){
+                for (int v = 0; v < adjacencyMatrix.length ; v++) {
+                    if(cor[v]==GraphNode.BRANCO){
+                        topologicalSortVisit(stack,v);
+                    }
+                }
+            }else continue;
+        }
+        return stack;
+    }
+
+    public boolean hasDependencies(int i){
+        for (int v = 0; v <adjacencyMatrix.length ; v++) {
+            if(adjacencyMatrix[i][v]){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void topologicalSortVisit(Stack<Integer>stack, int u){
+        start[u] = ++tempo;
+        cor[u] = GraphNode.CINZA;
+        for (int v = 0; v < adjacencyMatrix.length; v++) {
+            if(cor[v] == GraphNode.BRANCO && adjacencyMatrix[u][v]){
+                previous[v] = u;
+                topologicalSortVisit(stack,v);
+            }
+        }
+        cor[u] = GraphNode.PRETO;
+        end[u] = ++tempo;
+        stack.push(u);
+    }
+
+    public void printUndirectedGraph(){
+        for (int i = 0; i < adjacencyMatrix.length; i++) {
+            for (int j = 0; j <adjacencyMatrix.length ; j++) {
+                if(adjacencyMatrix[i][j]){
+                    if(j!=adjacencyMatrix[i].length-1){
+                        System.out.print(nodeList.get(i).getName() + " -> " + nodeList.get(j).getName() + " | ");
+                    }else{
+                        System.out.print(nodeList.get(i).getName() + " -> " + nodeList.get(j).getName());
+                    }
+                }
+
+            }
+            System.out.println();
+        }
     }
 
     public Integer[] getCor() {
