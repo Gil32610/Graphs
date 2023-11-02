@@ -33,9 +33,9 @@ public class Main {
 
         graph.addDirectedEdge(3,5);
         Stack<Integer> stack = graph.topologicalDfsStart();
-        Integer[] order = new Integer[stack.size()];
+        Character[] order = new Character[stack.size()];
         for (int i = 0; i < order.length; i++) {
-            order[i] = stack.pop();
+            order[i] = nodeList.get(stack.pop()).getName();
         }
 
         System.out.println("Topological sort index order:");
