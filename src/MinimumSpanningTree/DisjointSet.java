@@ -41,6 +41,7 @@ public class DisjointSet {
              ) {
             System.out.print(weightedNode.getName()+" ");
         }
+        System.out.println();
     }
 
 
