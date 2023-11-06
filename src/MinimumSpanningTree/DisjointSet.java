@@ -23,4 +23,19 @@ public class DisjointSet {
            return set;
     }
 
+    public static DisjointSet union (WeightedNode u, WeightedNode v){
+            DisjointSet set1 = u.getSet();
+            DisjointSet set2 = v.getSet();
+
+
+        for (WeightedNode weightedNode:set1.nodeList) {
+            weightedNode.setSet(set2);
+            set2.nodeList.add(weightedNode);
+        }
+        return set2;
+
+    }
+
+
+
 }
