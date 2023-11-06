@@ -35,6 +35,13 @@ public class DisjointSet {
         return set2;
 
     }
+    public void printAllNodes(){
+        System.out.println("All nodes in this Set:");
+        for (WeightedNode weightedNode:nodeList
+             ) {
+            System.out.print(weightedNode.getName()+" ");
+        }
+    }
 
 
 
